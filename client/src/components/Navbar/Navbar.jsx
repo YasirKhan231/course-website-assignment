@@ -13,19 +13,8 @@ const Navbar = () => {
           <Link to="/" className={styles.link}>
             Home
           </Link>
-          <Link to="/courses" className={styles.link}>
+          <Link to="/" className={styles.link}>
             Courses
-          </Link>
-          <Link to="/about" className={styles.link}>
-            About
-          </Link>
-        </div>
-        <div className={styles.auth}>
-          <Link to="/login" className={styles.login}>
-            Login
-          </Link>
-          <Link to="/signup" className={styles.signup}>
-            Sign Up
           </Link>
         </div>
       </div>
