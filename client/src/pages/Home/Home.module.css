@@ -1,0 +1,20 @@
+/* src/pages/Home/Home.module.css */
+.container {
+  width: 90%;
+  max-width: 1200px;
+  margin: 2rem auto;
+  padding: 1rem;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 2rem;
+  text-align: center;
+}
+
+.courses {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 2rem;
+}

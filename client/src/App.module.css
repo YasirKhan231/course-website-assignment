@@ -1,0 +1,12 @@
+/* src/App.module.css */
+.app {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+.main {
+  flex: 1;
+  padding: 2rem 0;
+  background-color: #f9f9f9;
+}

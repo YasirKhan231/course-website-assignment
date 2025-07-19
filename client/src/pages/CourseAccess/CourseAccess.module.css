@@ -1,0 +1,193 @@
+/* src/pages/CourseAccess/CourseAccess.module.css */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 2rem 1rem;
+  background-color: white;
+}
+
+.header {
+  margin-bottom: 2rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid #eee;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 0.5rem;
+}
+
+.description {
+  color: #666;
+  font-size: 1.1rem;
+  line-height: 1.6;
+}
+
+.content {
+  display: flex;
+  gap: 2rem;
+}
+
+.sidebar {
+  width: 300px;
+  flex-shrink: 0;
+}
+
+.mainContent {
+  flex: 1;
+}
+
+.sectionTitle {
+  font-size: 1.25rem;
+  color: #333;
+  margin-bottom: 1rem;
+  padding-bottom: 0.5rem;
+  border-bottom: 1px solid #eee;
+}
+
+.courseInfo {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+}
+
+.infoItem {
+  display: flex;
+  margin-bottom: 1rem;
+}
+
+.infoLabel {
+  font-weight: 600;
+  color: #555;
+  width: 120px;
+}
+
+.infoValue {
+  color: #333;
+  flex: 1;
+}
+
+.resources {
+  background-color: #f9f9f9;
+  padding: 1.5rem;
+  border-radius: 8px;
+}
+
+.resourceButton {
+  display: block;
+  width: 100%;
+  padding: 0.75rem;
+  margin-bottom: 0.75rem;
+  background-color: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  color: #4285f4;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.resourceButton:hover {
+  background-color: #f1f1f1;
+}
+
+.modulesTitle {
+  font-size: 1.5rem;
+  color: #333;
+  margin-bottom: 1.5rem;
+}
+
+.modulesList {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.moduleCard {
+  background-color: white;
+  border: 1px solid #eee;
+  border-radius: 8px;
+  padding: 1.5rem;
+  position: relative;
+  transition: all 0.3s;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.05);
+}
+
+.moduleCard.completed {
+  border-left: 4px solid #4285f4;
+}
+
+.moduleHeader {
+  display: flex;
+  justify-content: space-between;
+  margin-bottom: 1rem;
+}
+
+.moduleTitle {
+  font-size: 1.1rem;
+  color: #333;
+  margin: 0;
+}
+
+.moduleDuration {
+  color: #666;
+  font-size: 0.9rem;
+}
+
+.moduleContent {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.moduleDescription {
+  color: #666;
+  margin: 0;
+}
+
+.moduleButton {
+  padding: 0.5rem 1rem;
+  background-color: #4285f4;
+  color: white;
+  border: none;
+  border-radius: 4px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.moduleButton:hover {
+  background-color: #3367d6;
+}
+
+.completionBadge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #e6f2ff;
+  color: #4285f4;
+  padding: 0.25rem 0.5rem;
+  border-radius: 4px;
+  font-size: 0.8rem;
+  font-weight: 500;
+}
+
+.loading {
+  text-align: center;
+  padding: 2rem;
+  font-size: 1.2rem;
+  color: #666;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .content {
+    flex-direction: column;
+  }
+  
+  .sidebar {
+    width: 100%;
+  }
+}
