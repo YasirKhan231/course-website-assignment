@@ -6,8 +6,8 @@ const Navbar = () => {
       <div className={styles.navContainer}>
         <h1 className={styles.logo}>TechMaster</h1>
         <div className={styles.navLinks}>
-          <a href="/" className={styles.navLink}>
-            Courses
+          <a href="/access" className={styles.navLink}>
+            access course
           </a>
         </div>
       </div>
