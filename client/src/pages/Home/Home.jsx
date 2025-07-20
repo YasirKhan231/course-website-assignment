@@ -2,9 +2,9 @@
 
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import Navbar from "../../components/navbar/Navbar";
+import Navbar from "../../components/Navbar/Navbar";
 import HeroSection from "../../components/herosection/herosection";
-import CourseCard from "../../components/coursecard/CourseCard";
+import CourseCard from "../../components/CourseCard/CourseCard";
 import TestimonialsSection from "../../components/testimonial/testimonial";
 import FAQSection from "../../components/faqsection/faqsection";
 import Footer from "../../components/footer/footer";
