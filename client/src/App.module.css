@@ -1,12 +1,17 @@
-/* src/App.module.css */
 .app {
+  font-family: 'Inter', sans-serif;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
 }
 
-.main {
-  flex: 1;
-  padding: 2rem 0;
-  background-color: #f9f9f9;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background-color: #f8fafc;
+  color: #1e293b;
 }

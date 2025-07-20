@@ -1,11 +1,30 @@
 // src/components/PaymentModal/PaymentModal.jsx
-import { useState } from "react";
+import { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import styles from "./PaymentModal.module.css";
 
 const PaymentModal = ({ course, onClose, onSuccess }) => {
   const [email, setEmail] = useState("");
   const [loading, setLoading] = useState(false);
+
+  const handleEscapeKey = useCallback(
+    (event) => {
+      if (event.key === "Escape") {
+        onClose();
+      }
+    },
+    [onClose]
+  );
+
+  useEffect(() => {
+    document.body.style.overflow = "hidden";
+    document.addEventListener("keydown", handleEscapeKey);
+
+    return () => {
+      document.body.style.overflow = "unset";
+      document.removeEventListener("keydown", handleEscapeKey);
+    };
+  }, [handleEscapeKey]);
 
   const handlePayment = async () => {
     setLoading(true);
@@ -52,38 +71,43 @@ const PaymentModal = ({ course, onClose, onSuccess }) => {
 
   return (
     <div className={styles.overlay}>
-      <div className={styles.modal}>
-        <h2 className={styles.title}>Confirm Purchase</h2>
-        <p className={styles.text}>
-          You are about to purchase: <strong>{course.title}</strong>
-        </p>
-        <p className={styles.price}>Price: ₹{course.price}</p>
+      <div className={styles.modalWrapper}>
+        <div className={styles.modalContent}>
+          <div className={styles.modal}>
+            <h2 className={styles.title}>Confirm Purchase</h2>
+            <p className={styles.text}>
+              You are about to purchase: <strong>{course.title}</strong>
+            </p>
+            <p className={styles.price}>Price: ₹{course.price}</p>
 
-        <div className={styles.formGroup}>
-          <label className={styles.label}>Email:</label>
-          <input
-            type="email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            placeholder="Enter your email"
-            className={styles.input}
-            required
-          />
-        </div>
+            <div className={styles.formGroup}>
+              <label className={styles.label}>Email:</label>
+              <input
+                type="email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                placeholder="Enter your email"
+                className={styles.input}
+                required
+              />
+            </div>
 
-        <div className={styles.buttons}>
-          <button onClick={onClose} className={styles.cancel}>
-            Cancel
-          </button>
-          <button
-            onClick={handlePayment}
-            disabled={loading || !email}
-            className={`${styles.confirm} ${
-              loading || !email ? styles.disabled : ""
-            }`}
-          >
-            {loading ? "Processing..." : "Proceed to Pay"}
-          </button>
+            <div className={styles.buttons}>
+              <button onClick={onClose} className={styles.cancel} type="button">
+                Cancel
+              </button>
+              <button
+                onClick={handlePayment}
+                disabled={loading || !email}
+                className={`${styles.confirm} ${
+                  loading || !email ? styles.disabled : ""
+                }`}
+                type="button"
+              >
+                {loading ? "Processing..." : "Proceed to Pay"}
+              </button>
+            </div>
+          </div>
         </div>
       </div>
     </div>

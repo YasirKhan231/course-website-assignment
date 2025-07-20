@@ -7,36 +7,58 @@
   bottom: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
-  justify-content: center;
   align-items: center;
+  justify-content: center;
   z-index: 1000;
+  backdrop-filter: blur(2px);
+  animation: fadeIn 0.3s ease-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.modalWrapper {
+  width: 100%;
+  max-width: 500px;
+  padding: 0 20px;
+}
+
+.modalContent {
+  background: white;
+  border-radius: 12px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+  overflow: hidden;
+  transform: translateY(0);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
 }
 
 .modal {
-  background-color: white;
-  border-radius: 8px;
   padding: 2rem;
-  width: 100%;
-  max-width: 400px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .title {
   font-size: 1.5rem;
-  color: #333;
+  font-weight: 600;
   margin-bottom: 1rem;
+  color: #1a1a1a;
 }
 
 .text {
-  color: #555;
   margin-bottom: 0.5rem;
+  color: #4a5568;
 }
 
 .price {
   font-size: 1.25rem;
   font-weight: 600;
-  color: #333;
   margin-bottom: 1.5rem;
+  color: #2d3748;
 }
 
 .formGroup {
@@ -46,53 +68,62 @@
 .label {
   display: block;
   margin-bottom: 0.5rem;
-  color: #555;
   font-weight: 500;
+  color: #4a5568;
 }
 
 .input {
   width: 100%;
   padding: 0.75rem;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #e2e8f0;
+  border-radius: 6px;
   font-size: 1rem;
+  transition: all 0.2s;
+}
+
+.input:focus {
+  outline: none;
+  border-color: #4285f4;
+  box-shadow: 0 0 0 3px rgba(66, 133, 244, 0.2);
 }
 
 .buttons {
   display: flex;
-  justify-content: flex-end;
   gap: 1rem;
+  justify-content: flex-end;
+  margin-top: 2rem;
+}
+
+.cancel, .confirm {
+  padding: 0.75rem 1.5rem;
+  border-radius: 6px;
+  font-weight: 500;
+  font-size: 1rem;
+  transition: all 0.2s;
+  border: none;
+  cursor: pointer;
 }
 
 .cancel {
-  padding: 0.75rem 1.5rem;
-  background-color: #f1f1f1;
-  color: #555;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
+  background-color: #f1f5f9;
+  color: #4a5568;
 }
 
 .cancel:hover {
-  background-color: #e1e1e1;
+  background-color: #e2e8f0;
 }
 
 .confirm {
-  padding: 0.75rem 1.5rem;
   background-color: #4285f4;
   color: white;
-  border: none;
-  border-radius: 4px;
-  cursor: pointer;
-  transition: background-color 0.3s;
 }
 
-.confirm:hover {
+.confirm:hover:not(.disabled) {
   background-color: #3367d6;
 }
 
-.confirm.disabled {
-  background-color: #cccccc;
+.disabled {
+  opacity: 0.7;
   cursor: not-allowed;
+  background-color: #a0aec0;
 }

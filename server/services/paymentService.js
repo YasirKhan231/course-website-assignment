@@ -5,38 +5,41 @@ import User from "../models/User.js";
 
 export const createRazorpayOrder = async (amount, currency, receipt) => {
   const options = {
-    amount: amount * 100, // amount in paise
+    amount, // amount in paise
     currency,
     receipt,
   };
   const order = await razorpay.orders.create(options);
   return order;
 };
-
+// services/paymentService.js
 export const verifyRazorpayPayment = async ({
   razorpay_order_id,
   razorpay_payment_id,
   razorpay_signature,
   email,
 }) => {
-  const body = razorpay_order_id + "|" + razorpay_payment_id;
+  // 1. Signature Verification
+  const body = `${razorpay_order_id}|${razorpay_payment_id}`;
   const expectedSignature = crypto
     .createHmac("sha256", process.env.RAZORPAY_SECRET)
-    .update(body.toString())
+    .update(body)
     .digest("hex");
 
   if (expectedSignature !== razorpay_signature) {
-    throw new Error("Invalid signature");
+    throw new Error("Payment verification failed: Invalid signature");
   }
 
-  // Update user access
-  let user = await User.findOne({ email });
-  if (!user) {
-    user = new User({ email, hasAccess: true });
-  } else {
-    user.hasAccess = true;
-  }
-  await user.save();
+  // 2. Update/Create User Record
+  await User.findOneAndUpdate(
+    { email },
+    {
+      hasAccess: true,
+      paymentId: razorpay_payment_id,
+      lastAccessed: new Date(),
+    },
+    { upsert: true, new: true }
+  );
 
   return true;
 };

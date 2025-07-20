@@ -1,4 +1,5 @@
 // controllers/paymentController.js
+import User from "../models/User.js";
 import {
   createRazorpayOrder,
   verifyRazorpayPayment,
@@ -12,19 +13,51 @@ export const createOrder = async (req, res) => {
     const order = await createRazorpayOrder(amount, currency, receipt);
     res.status(200).json({ success: true, order });
   } catch (err) {
-    res.status(500).json({
-      success: false,
-      message: "Order creation failed",
-      error: err.message,
-    });
+    console.log("Error creating order:", err),
+      res.status(500).json({
+        success: false,
+        message: "Order creation failed",
+        error: err.message,
+      });
   }
 };
 
 export const verifyPayment = async (req, res) => {
   try {
-    await verifyRazorpayPayment(req.body);
-    res.status(200).json({ success: true, message: "Payment verified" });
+    const { email } = req.body;
+
+    if (!email) {
+      return res.status(400).json({
+        success: false,
+        message: "Email is required",
+      });
+    }
+
+    // Check user access in database
+    const user = await User.findOne({ email });
+
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+        userExists: false,
+        hasAccess: false,
+      });
+    }
+
+    // Return access status
+    res.status(200).json({
+      success: true,
+      message: "User exists",
+      userExists: true,
+      hasAccess: user.hasAccess,
+    });
   } catch (err) {
-    res.status(400).json({ success: false, message: err.message });
+    console.error("Access verification error:", err);
+    res.status(500).json({
+      success: false,
+      message: "Error verifying user access",
+      error: err.message,
+    });
   }
 };
