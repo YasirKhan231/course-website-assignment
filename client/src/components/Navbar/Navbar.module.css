@@ -1,50 +1,50 @@
 .navbar {
-  background-color: #1e3a8a;
-  color: white;
-  padding: 1rem 0;
+  background: #ffffff;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid #e5f3e8;
   position: sticky;
   top: 0;
-  z-index: 100;
+  z-index: 50;
 }
 
-.container {
-  width: 90%;
+.navContainer {
   max-width: 1200px;
   margin: 0 auto;
+  padding: 0 1rem;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  height: 4rem;
 }
 
 .logo {
   font-size: 1.5rem;
   font-weight: 700;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   text-decoration: none;
-  color: white;
 }
 
-.links {
+.navLinks {
   display: flex;
   gap: 2rem;
 }
 
-.link {
-  color: white;
+.navLink {
+  color: #059669;
   text-decoration: none;
   font-weight: 500;
-  transition: opacity 0.2s;
+  transition: color 0.2s ease;
 }
 
-.link:hover {
-  opacity: 0.8;
+.navLink:hover {
+  color: #047857;
 }
 
-@media (max-width: 768px) {
-  .container {
-    width: 95%;
-  }
-  
-  .links {
-    gap: 1rem;
+@media (max-width: 480px) {
+  .navContainer {
+    padding: 0 0.5rem;
   }
 }

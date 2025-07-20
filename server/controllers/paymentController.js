@@ -32,7 +32,6 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    // Check user access through service
     const { userExists, hasAccess } = await verifyUserAccess(email);
 
     if (!userExists) {
@@ -44,7 +43,6 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    // Return access status
     res.status(200).json({
       success: true,
       message: "User exists",
@@ -60,7 +58,6 @@ export const verifyPayment = async (req, res) => {
     });
   }
 };
-// POST - Add payment details and grant access
 export const addPaymentDetail = async (req, res) => {
   const { email, razorpay_order_id, razorpay_payment_id, razorpay_signature } =
     req.body;

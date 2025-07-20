@@ -1,18 +1,15 @@
-// services/paymentService.js
 import razorpay from "../config/razorpay.js";
-import crypto from "crypto";
 import User from "../models/User.js";
 
 export const createRazorpayOrder = async (amount, currency, receipt) => {
   const options = {
-    amount, // amount in paise
+    amount,
     currency,
     receipt,
   };
   const order = await razorpay.orders.create(options);
   return order;
 };
-// services/paymentService.js
 export const verifyUserAccess = async (email) => {
   const user = await User.findOne({ email }).select("hasAccess");
 

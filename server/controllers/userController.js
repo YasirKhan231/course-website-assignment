@@ -1,6 +1,5 @@
 import { createUser as createUserService } from "../services/userService.js";
 
-// POST - Create new user (name + email)
 export const createUser = async (req, res) => {
   console.log(req.body);
   const { fullName, email } = req.body;

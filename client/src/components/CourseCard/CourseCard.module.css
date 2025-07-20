@@ -1,131 +1,196 @@
-.card {
-  background-color: white;
-  border-radius: 0.5rem;
+.courseCard {
+  background: white;
+  border-radius: 1rem;
   overflow: hidden;
-  box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
-  margin: 2rem auto;
-  max-width: 1200px;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+  margin-bottom: 4rem;
   display: flex;
   flex-direction: column;
 }
 
-.imageContainer {
+.courseImageContainer {
   width: 100%;
   height: 300px;
   overflow: hidden;
 }
 
-.image {
+.courseImage {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
 
-.content {
+.courseDetails {
   padding: 2rem;
 }
 
-.title {
-  font-size: 1.75rem;
+.courseBadges {
+  display: flex;
+  gap: 0.5rem;
   margin-bottom: 1rem;
-  color: #1e293b;
 }
 
-.description {
-  color: #64748b;
-  margin-bottom: 1.5rem;
+.badge {
+  background: #dcfce7;
+  color: #166534;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.badgeOutline {
+  border: 1px solid #bbf7d0;
+  color: #059669;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.courseTitle {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.courseDescription {
+  color: #6b7280;
+  font-size: 1.125rem;
   line-height: 1.6;
+  margin-bottom: 2rem;
 }
 
-.features {
+.courseMeta {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.metaItem {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+}
+
+.metaIcon {
+  font-size: 1.25rem;
+}
+
+.metaLabel {
+  font-weight: 600;
+  color: #1f2937;
+  margin-bottom: 0.25rem;
+}
+
+.metaValue {
+  color: #6b7280;
+}
+
+.courseFeatures {
   margin-bottom: 2rem;
 }
 
 .featuresTitle {
   font-size: 1.25rem;
+  font-weight: 600;
+  color: #1f2937;
   margin-bottom: 1rem;
-  color: #1e293b;
 }
 
 .featuresList {
-  list-style: none;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 0.75rem;
 }
 
 .featureItem {
-  margin-bottom: 0.5rem;
   display: flex;
   align-items: center;
+  gap: 0.5rem;
 }
 
 .checkIcon {
   color: #10b981;
-  margin-right: 0.5rem;
-  font-weight: bold;
+  font-weight: 700;
+  font-size: 1.125rem;
 }
 
-.meta {
+.coursePricing {
   display: flex;
-  gap: 2rem;
-  margin-bottom: 1.5rem;
-}
-
-.metaLabel {
-  font-weight: 600;
-  margin-right: 0.5rem;
-  color: #334155;
-}
-
-.pricing {
+  align-items: center;
+  gap: 1rem;
   margin-bottom: 2rem;
+  flex-wrap: wrap;
+}
+
+.currentPrice {
+  font-size: 2rem;
+  font-weight: 700;
+  color: #059669;
 }
 
 .originalPrice {
+  font-size: 1.25rem;
+  color: #9ca3af;
   text-decoration: line-through;
-  color: #64748b;
-  margin-right: 1rem;
 }
 
-.price {
-  font-size: 1.5rem;
-  font-weight: 700;
-  color: #1e3a8a;
+.saveBadge {
+  background: #fef2f2;
+  color: #dc2626;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: 600;
 }
 
-.button {
-  background-color: #1e3a8a;
+.buyButton {
+  width: 100%;
+  background: linear-gradient(135deg, #059669 0%, #10b981 100%);
   color: white;
   border: none;
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.25rem;
-  font-size: 1rem;
+  padding: 1rem 2rem;
+  border-radius: 0.5rem;
+  font-size: 1.125rem;
   font-weight: 600;
   cursor: pointer;
-  transition: background-color 0.2s;
-  width: 100%;
+  transition: all 0.2s ease;
+  transform: translateY(0);
 }
 
-.button:hover {
-  background-color: #1e40af;
+.buyButton:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 25px rgba(16, 185, 129, 0.3);
 }
 
 @media (min-width: 768px) {
-  .card {
+  .courseCard {
     flex-direction: row;
   }
-  
-  .imageContainer {
+
+  .courseImageContainer {
     width: 40%;
     height: auto;
   }
-  
-  .content {
+
+  .courseDetails {
     width: 60%;
   }
 }
 
-@media (max-width: 480px) {
-  .meta {
+@media (max-width: 768px) {
+  .coursePricing {
     flex-direction: column;
+    align-items: flex-start;
     gap: 0.5rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .courseDetails {
+    padding: 1.5rem;
   }
 }
