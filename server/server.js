@@ -14,8 +14,8 @@ app.use(cors());
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
-app.use("/api", paymentRoutes);
-app.use("/api", userRoutes);
+app.use("/api/payment", paymentRoutes);
+app.use("/api/user", userRoutes);
 
 app.listen(5000, () => {
   console.log("Server running on port 5000");

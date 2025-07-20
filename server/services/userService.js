@@ -10,19 +10,4 @@ export const createUser = async (fullName, email) => {
   });
 };
 
-// Service to grant access after payment
-export const grantAccessAfterPayment = async (email) => {
-  return await User.findOneAndUpdate(
-    { email },
-    {
-      hasAccess: true,
-      $push: {
-        accessLog: {
-          accessTime: new Date(),
-          action: "payment_verified",
-        },
-      },
-    },
-    { new: true }
-  );
-};
+// Service to add payment details

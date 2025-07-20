@@ -90,7 +90,7 @@ const Home = () => {
   // Create user in backend
   const createUserInBackend = async (fullName, email) => {
     try {
-      const response = await fetch(`${backendUrl}/create-user`, {
+      const response = await fetch(`${backendUrl}/user/create-user`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -102,25 +102,6 @@ const Home = () => {
       return await response.json();
     } catch (error) {
       console.error("User creation error:", error);
-      throw error;
-    }
-  };
-
-  // Grant access after successful payment
-  const grantAccess = async (email) => {
-    try {
-      const response = await fetch(`${backendUrl}/grant-access`, {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({ email }),
-      });
-
-      if (!response.ok) throw new Error("Failed to grant access");
-      return await response.json();
-    } catch (error) {
-      console.error("Access grant error:", error);
       throw error;
     }
   };
@@ -141,7 +122,7 @@ const Home = () => {
   // Create Razorpay order
   const createOrder = async (userData) => {
     try {
-      const response = await fetch(`${backendUrl}/create-order`, {
+      const response = await fetch(`${backendUrl}/payment/create-order`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
@@ -162,6 +143,23 @@ const Home = () => {
   };
 
   // Verify payment
+  const addpaymentdetail = async (paymentData) => {
+    try {
+      const response = await fetch(`${backendUrl}/payment/add-payment-detail`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(paymentData),
+      });
+
+      if (!response.ok) throw new Error("Payment verification failed");
+      return await response.json();
+    } catch (error) {
+      console.error("Payment verification error:", error);
+      throw error;
+    }
+  };
 
   const handlePayment = async (userData) => {
     setIsLoading(true);
@@ -186,8 +184,14 @@ const Home = () => {
         order_id: orderResponse.order.id,
         handler: async (response) => {
           try {
-            // 6. Grant access
-            await grantAccess(userData.email);
+            // 5. add  payment detail
+
+            await addpaymentdetail({
+              razorpay_order_id: response.razorpay_order_id,
+              razorpay_payment_id: response.razorpay_payment_id,
+              razorpay_signature: response.razorpay_signature,
+              email: userData.email,
+            });
 
             // 7. Save to localStorage
             saveUserData(userData.email);

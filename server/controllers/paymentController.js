@@ -1,8 +1,7 @@
-// controllers/paymentController.js
-import User from "../models/User.js";
 import {
   createRazorpayOrder,
-  verifyRazorpayPayment,
+  verifyUserAccess,
+  addPaymentDetails,
 } from "../services/paymentService.js";
 
 export const createOrder = async (req, res) => {
@@ -33,15 +32,15 @@ export const verifyPayment = async (req, res) => {
       });
     }
 
-    // Check user access in database
-    const user = await User.findOne({ email });
+    // Check user access through service
+    const { userExists, hasAccess } = await verifyUserAccess(email);
 
-    if (!user) {
+    if (!userExists) {
       return res.status(404).json({
         success: false,
         message: "User not found",
-        userExists: false,
-        hasAccess: false,
+        userExists,
+        hasAccess,
       });
     }
 
@@ -49,14 +48,65 @@ export const verifyPayment = async (req, res) => {
     res.status(200).json({
       success: true,
       message: "User exists",
-      userExists: true,
-      hasAccess: user.hasAccess,
+      userExists,
+      hasAccess,
     });
   } catch (err) {
     console.error("Access verification error:", err);
     res.status(500).json({
       success: false,
       message: "Error verifying user access",
+      error: err.message,
+    });
+  }
+};
+// POST - Add payment details and grant access
+export const addPaymentDetail = async (req, res) => {
+  const { email, razorpay_order_id, razorpay_payment_id, razorpay_signature } =
+    req.body;
+
+  if (
+    !email ||
+    !razorpay_order_id ||
+    !razorpay_payment_id ||
+    !razorpay_signature
+  ) {
+    return res.status(400).json({
+      success: false,
+      message: "All payment details and email are required",
+    });
+  }
+
+  try {
+    const paymentData = {
+      razorpay_order_id,
+      razorpay_payment_id,
+      razorpay_signature,
+    };
+
+    const updatedUser = await addPaymentDetails(email, paymentData);
+
+    if (!updatedUser) {
+      return res.status(404).json({
+        success: false,
+        message: "User not found",
+      });
+    }
+
+    res.status(200).json({
+      success: true,
+      message: "Payment verified and access granted",
+      user: {
+        id: updatedUser._id,
+        email: updatedUser.email,
+        hasAccess: updatedUser.hasAccess,
+        paymentDetails: updatedUser.paymentDetails,
+      },
+    });
+  } catch (err) {
+    res.status(500).json({
+      success: false,
+      message: "Error processing payment",
       error: err.message,
     });
   }

@@ -13,33 +13,39 @@ export const createRazorpayOrder = async (amount, currency, receipt) => {
   return order;
 };
 // services/paymentService.js
-export const verifyRazorpayPayment = async ({
-  razorpay_order_id,
-  razorpay_payment_id,
-  razorpay_signature,
-  email,
-}) => {
-  // 1. Signature Verification
-  const body = `${razorpay_order_id}|${razorpay_payment_id}`;
-  const expectedSignature = crypto
-    .createHmac("sha256", process.env.RAZORPAY_SECRET)
-    .update(body)
-    .digest("hex");
+export const verifyUserAccess = async (email) => {
+  const user = await User.findOne({ email }).select("hasAccess");
 
-  if (expectedSignature !== razorpay_signature) {
-    throw new Error("Payment verification failed: Invalid signature");
+  if (!user) {
+    return {
+      userExists: false,
+      hasAccess: false,
+    };
   }
 
-  // 2. Update/Create User Record
-  await User.findOneAndUpdate(
+  return {
+    userExists: true,
+    hasAccess: user.hasAccess,
+  };
+};
+export const addPaymentDetails = async (email, paymentData) => {
+  return await User.findOneAndUpdate(
     { email },
     {
       hasAccess: true,
-      paymentId: razorpay_payment_id,
-      lastAccessed: new Date(),
+      paymentDetails: {
+        razorpay_order_id: paymentData.razorpay_order_id,
+        razorpay_payment_id: paymentData.razorpay_payment_id,
+        razorpay_signature: paymentData.razorpay_signature,
+        payment_date: new Date(),
+      },
+      $push: {
+        accessLog: {
+          accessTime: new Date(),
+          action: "payment_verified",
+        },
+      },
     },
-    { upsert: true, new: true }
+    { new: true }
   );
-
-  return true;
 };

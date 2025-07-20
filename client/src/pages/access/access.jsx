@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import styles from "./Access.module.css";
+const backendUrl = import.meta.env.VITE_BACKEND_URL;
 
 const Access = () => {
   const [user, setUser] = useState(null);
@@ -36,16 +37,13 @@ const Access = () => {
         }
 
         // Verify access with backend
-        const response = await fetch(
-          `http://localhost:5000/api/verify-payment`,
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ email: storedUser.email }),
-          }
-        );
+        const response = await fetch(`${backendUrl}/payment/verify-payment`, {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({ email: storedUser.email }),
+        });
         if (!response.ok) {
           throw new Error("Failed to verify access");
         }

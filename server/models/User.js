@@ -3,8 +3,8 @@ import mongoose from "mongoose";
 const userSchema = new mongoose.Schema({
   fullName: {
     type: String,
-    required: [true, "Full name is required"], // Makes field mandatory
-    trim: true, // Removes whitespace from both ends
+    required: [true, "Full name is required"],
+    trim: true,
     maxlength: [100, "Full name cannot exceed 100 characters"],
   },
   email: {
@@ -12,9 +12,8 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email is required"],
     unique: false,
     trim: true,
-    lowercase: true, // Stores email in lowercase
+    lowercase: true,
     match: [
-      // Basic email format validation
       /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/,
       "Please enter a valid email",
     ],
@@ -22,6 +21,15 @@ const userSchema = new mongoose.Schema({
   hasAccess: {
     type: Boolean,
     default: false,
+  },
+  paymentDetails: {
+    razorpay_order_id: String,
+    razorpay_payment_id: String,
+    razorpay_signature: String,
+    payment_date: {
+      type: Date,
+      default: Date.now,
+    },
   },
   accessLog: [
     {
@@ -31,19 +39,18 @@ const userSchema = new mongoose.Schema({
       },
       action: {
         type: String,
-        enum: ["login", "course_access", "payment"], // Allowed values
+        enum: ["login", "course_access", "payment_verified", "payment_failed"],
         default: "course_access",
       },
     },
   ],
   createdAt: {
     type: Date,
-    default: Date.now, // Automatically set on creation
-    immutable: true, // Cannot be changed after creation
+    default: Date.now,
+    immutable: true,
   },
 });
 
-// Index for faster queries on frequently accessed fields
 userSchema.index({ email: 1 });
 userSchema.index({ hasAccess: 1 });
 
